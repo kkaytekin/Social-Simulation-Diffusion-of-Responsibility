@@ -64,38 +64,38 @@ class World:
                 counter += 1.0
         return counter # TODO Check if this is legal in python
 
-# Give parameters
-radius = 0.2 # The whole world is scaled between 0 and 1
-numNodes = 200
-world = World(radius)
-sumHelped = 0
-steptracker = []
+def main():
+    # Give parameters
+    radius = 0.2 # The whole world is scaled between 0 and 1
+    numNodes = 200
+    world = World(radius)
+    sumHelped = 0
+    steptracker = []
 
-for i in range(numNodes):
-    world.createNewNode()
-    print("Generating node:", world.dictofnodes[i].idx)
-    x = world.dictofnodes[i].x
-    y = world.dictofnodes[i].y
-    plot1 = plt.figure(1)
-    plt.title("Red: Needs Help, Blue: Might consider to help")
-    plt.xlim((0,1))
-    plt.ylim((0,1))
-    if world.dictofnodes[i].initiallyRed:
-        plt.scatter(x, y, c = 'r')
-        plt.pause(0.0005)
-        if world.dictofnodes[i].color == 'b':
+    for i in range(numNodes):
+        world.createNewNode()
+        print("Generating node:", world.dictofnodes[i].idx)
+        x = world.dictofnodes[i].x
+        y = world.dictofnodes[i].y
+        plot1 = plt.figure(1)
+        plt.title("Red: Needs Help, Blue: Might consider to help")
+        plt.xlim((0,1))
+        plt.ylim((0,1))
+        if world.dictofnodes[i].initiallyRed:
+            plt.scatter(x, y, c = 'r')
             plt.pause(0.0005)
-            sumHelped += 1
-    plt.scatter(x, y, c = world.dictofnodes[i].color)
-    plt.pause(0.0005)
-    steptracker.append((i,sumHelped))
-    plot2 = plt.figure(2)
-    plt.title("Course of conversion")
-    plt.xlabel("Population")
-    plt.ylabel("Conversions")
-    plt.plot(*zip(*steptracker))
-plt.show()
-
-
-
-
+            if world.dictofnodes[i].color == 'b':
+                plt.pause(0.0005)
+                sumHelped += 1
+        plt.scatter(x, y, c = world.dictofnodes[i].color)
+        plt.pause(0.0005)
+        steptracker.append((i,sumHelped))
+        plot2 = plt.figure(2)
+        plt.title("Course of conversion")
+        plt.xlabel("Population")
+        plt.ylabel("Conversions")
+        plt.plot(*zip(*steptracker))
+    plt.show()
+    
+if __name__ == '__main__':
+    main()
